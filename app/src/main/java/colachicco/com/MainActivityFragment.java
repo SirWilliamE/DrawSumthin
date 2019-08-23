@@ -103,5 +103,10 @@ public class MainActivityFragment extends Fragment {
         public void onAccuracyChanged(Sensor sensor, int accuracy) {}
     };
 
+    // confirm with user whether image should be erased
+    private void confirmErase() {
+        EraseImageDialogFragment fragment = new EraseImageDialogFragment();
+        fragment.show(getFragmentManager(), "erase dialog");
+    }
 
 }
