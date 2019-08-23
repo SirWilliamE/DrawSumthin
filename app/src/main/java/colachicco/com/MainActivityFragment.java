@@ -54,5 +54,19 @@ public class MainActivityFragment extends Fragment {
         sensorManager.registerListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
     }
 
+    // stop listening for accelerometer events
+    @Override
+    public void onPause() {
+        super.onPause();
+        disableAccelerometerListening();
+    }
+
+    private void disableAccelerometerListening() {
+        // get SensorManager
+        SensorManager sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+
+        // stop listening for accelerometer events
+        sensorManager.unregisterListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
+    }
 
 }
