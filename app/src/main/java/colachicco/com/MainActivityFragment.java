@@ -2,6 +2,8 @@ package colachicco.com;
 
 import android.content.Context;
 import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -68,5 +70,38 @@ public class MainActivityFragment extends Fragment {
         // stop listening for accelerometer events
         sensorManager.unregisterListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
     }
+
+    // event handler for accelerometer events
+    private final SensorEventListener sensorEventListener = new SensorEventListener() {
+        // user accelerometer to check if user shook the device
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            // make sure other dialogs are not displayed
+            if (!dialogOnScreen) {
+                // get X, Y, and Z values for the SensorEvent
+                float x = event.values[0];
+                float y = event.values[1];
+                float z = event.values[2];
+
+                // save previous acceleration value
+                lastAcceleration = currentAcceleration;
+
+                // calculate current acceleration
+                currentAcceleration = x * x + y * y + z * z;
+
+                // calculate the change in acceleration
+                acceleration = currentAcceleration * (currentAcceleration - lastAcceleration);
+
+                // if the acceleration is above the threshold, erase
+                if (acceleration > ACCELERATION_THRESHOLD)
+                    confirmErase();
+            }
+        }
+
+        // method required by interface SensorEventListener
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+    };
+
 
 }
