@@ -8,6 +8,9 @@ import android.hardware.SensorManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -107,6 +110,40 @@ public class MainActivityFragment extends Fragment {
     private void confirmErase() {
         EraseImageDialogFragment fragment = new EraseImageDialogFragment();
         fragment.show(getFragmentManager(), "erase dialog");
+    }
+
+    // show the menu items
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.doodle_fragment_menu, menu);
+    }
+
+    // handle menu choice
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // switch for menu choice
+        switch (item.getItemId()) {
+            case R.id.color:
+                ColorDialogFragment colorDialog = new ColorDialogFragment();
+                colorDialog.show(getFragmentManager(), "color dialog");
+                return true; // consume menu event
+            case R.id.line_width:
+                LineWidthDialogFragment widthDialog = new LineWidthDialogFragment();
+                widthDialog.show(getFragmentManager(), "line width dialog");
+                return true; // consume menu event
+            case R.id.delete_drawing:
+                confirmErase();
+                return true; // consume menu event
+            case R.id.save:
+                saveImage();
+                return true; // consume menu event
+            case R.id.print:
+                doodleView.printImage();
+                return true; // consume menu event
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }
