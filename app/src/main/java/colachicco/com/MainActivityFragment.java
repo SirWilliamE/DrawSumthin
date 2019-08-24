@@ -203,6 +203,16 @@ public class MainActivityFragment extends Fragment {
         }
     }
 
+    // returns the DoodleView
+    public DoodleView getDoodleView() {
+        return doodleView;
+    }
+
+    // indicates whether a dialog is displayed
+    public void setDialogOnScreen(boolean visible) {
+        dialogOnScreen = visible;
+    }
+
 
 
 }
