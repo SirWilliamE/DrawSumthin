@@ -190,6 +190,18 @@ public class MainActivityFragment extends Fragment {
         }
     }
 
+    // called byt the system when user grants or denies permission
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        // switch typically chooses correct action according to which feature requests permission
+        switch (requestCode) {
+            case SAVE_IMAGE_PERMISSION_REQUEST_CODE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    doodleView.saveImage(); // save the image
+                return;
+        }
+    }
 
 
 
