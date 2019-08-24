@@ -3,6 +3,7 @@ package colachicco.com;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
@@ -27,8 +28,20 @@ public class DoodleView extends View {
     private final Map<Integer, Path> pathMap = new HashMap<>();
     private final Map<Integer, Point> previousPointMap = new HashMap<>();
 
+    // DoodleView constructor initializes DoodleView
+    public DoodleView(Context context, AttributeSet attrs) {
+        super(context, attrs); // pass context to View's constructor
+        paintScreen = new Paint(); // used to display bitmap on screen
 
-    public DoodleView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+        // set initial display settings for painted line
+        paintLine = new Paint();
+        paintLine.setAntiAlias(true); // smooth edges of drawn line
+        paintLine.setColor(Color.BLACK); // set black as default color
+        paintLine.setStyle(Paint.Style.STROKE); // solid line
+        paintLine.setStrokeWidth(5); // default line width
+        paintLine.setStrokeCap(Paint.Cap.ROUND); // rounded line ends
     }
+
+
+
 }
