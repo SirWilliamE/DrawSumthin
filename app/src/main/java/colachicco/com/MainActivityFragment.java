@@ -1,6 +1,10 @@
 package colachicco.com;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -145,5 +149,48 @@ public class MainActivityFragment extends Fragment {
 
         return super.onOptionsItemSelected(item);
     }
+
+    // saves image if we already have permissions, requests them if not
+    private void saveImage() {
+        // check if we already have permissions
+        if (getContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            // explain why permission is needed
+            if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                // set Alert Dialog's message
+                builder.setMessage(R.string.permission_explanation);
+
+                // add OK button to dialog
+                builder.setPositiveButton(android.R.string.ok,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // request permission
+                                requestPermissions(new String[]{
+                                        Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                        SAVE_IMAGE_PERMISSION_REQUEST_CODE);
+                            }
+                        }
+                        );
+
+                // display the dialog
+                builder.create().show();
+            }
+            else {
+                // request permission
+                requestPermissions(
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        SAVE_IMAGE_PERMISSION_REQUEST_CODE);
+            }
+        }
+        else { // if we already have permissions
+            doodleView.saveImage(); // save the image
+        }
+    }
+
+
+
 
 }
