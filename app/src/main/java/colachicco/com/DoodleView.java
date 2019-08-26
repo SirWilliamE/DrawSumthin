@@ -49,5 +49,33 @@ public class DoodleView extends View {
         bitmap.eraseColor(Color.WHITE);
     }
 
+    // erase the drawing
+    public void clear() {
+        pathMap.clear(); // remove all paths
+        previousPointMap.clear(); // remove all points
+        bitmap.eraseColor(Color.WHITE); // clear the bitmap
+        invalidate(); // refresh the screen
+    }
+
+    // set the line color
+    public void setDrawingColor(int color) {
+        paintLine.setColor(color);
+    }
+
+    // return the line color
+    public int getDrawingColor() {
+        return paintLine.getColor();
+    }
+
+    // set the line width
+    public void setLineWidth(int width) {
+        paintLine.setStrokeWidth(width);
+    }
+
+    // return the line width
+    public int getLineWidth() {
+        return (int) paintLine.getStrokeWidth();
+    }
+
 
 }
