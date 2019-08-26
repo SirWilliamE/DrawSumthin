@@ -77,5 +77,17 @@ public class DoodleView extends View {
         return (int) paintLine.getStrokeWidth();
     }
 
+    // perform custom drawing when DoodleView is refreshed on the screen
+    @Override
+    protected void onDraw(Canvas canvas) {
+        // draw the background screen
+        canvas.drawBitmap(bitmap, 0, 0, paintScreen);
+
+        // for each path currently being drawn
+        for (Integer key : pathMap.keySet())
+            canvas.drawPath(pathMap.get(key), paintLine); // draw line
+    }
+
+
 
 }
