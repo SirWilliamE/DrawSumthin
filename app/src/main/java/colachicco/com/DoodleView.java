@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -42,6 +41,13 @@ public class DoodleView extends View {
         paintLine.setStrokeCap(Paint.Cap.ROUND); // rounded line ends
     }
 
+    // creates Bitmap and Canvas based on View's size
+    @Override
+    public void onSizeChanged(int w, int h, int oldW, int oldH) {
+        bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        bitmapCanvas = new Canvas(bitmap);
+        bitmap.eraseColor(Color.WHITE);
+    }
 
 
 }
