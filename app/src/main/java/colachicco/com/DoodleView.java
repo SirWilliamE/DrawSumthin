@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.HashMap;
@@ -87,6 +88,28 @@ public class DoodleView extends View {
         for (Integer key : pathMap.keySet())
             canvas.drawPath(pathMap.get(key), paintLine); // draw line
     }
+
+    // handle touch event
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getActionMasked(); // event type
+        int actionIndex = event.getActionIndex(); // pointer ie: finger
+
+        // determine whether touch started, ended or is moving
+        if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN) {
+            touchStarted(event.getX(actionIndex), event.getY(actionIndex), event.getPointerId(actionIndex));
+        }
+        else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP) {
+            touchEnded(event.getPointerId(actionIndex));
+        }
+        else {
+            touchMoved(event);
+        }
+
+        invalidate(); // redraw
+        return true;
+    }
+
 
 
 
