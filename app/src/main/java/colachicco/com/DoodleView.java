@@ -110,6 +110,29 @@ public class DoodleView extends View {
         return true;
     }
 
+    // called when user touches the screen
+    private void touchStarted(float x, float y, int lineID) {
+        Path path; // the path for the given touch ID
+        Point point; // the last point in the path
+
+        // if there is already a path for the lineID
+        if (pathMap.containsKey(lineID)) {
+            path = pathMap.get(lineID); // get the path
+            path.reset(); // reset the path because a new touch has started
+            point = previousPointMap.get(lineID); // get Path's last point
+        }
+        else {
+            path = new Path();
+            pathMap.put(lineID, path); // add the Path to Map
+            point = new Point(); // create a new Point
+            previousPointMap.put(lineID, point); // add the Point to the Map
+        }
+
+        // move the coordinates of the touch
+        path.moveTo(x, y);
+        point.x = (int) x;
+        point.y = (int) y;
+    }
 
 
 
