@@ -134,6 +134,41 @@ public class DoodleView extends View {
         point.y = (int) y;
     }
 
+    // called when user drags finger on screen
+    private void touchMoved(MotionEvent event) {
+        // for each of the pointers in the given MotionEvent
+        for (int i = 0; i< event.getPointerCount(); i++) {
+            // get the pointer ID and pointer index
+            int pointerID = event.getPointerId(i);
+            int pointerIndex = event.findPointerIndex(pointerID);
+
+            // if there is a path associated with the pointer
+            if (pathMap.containsKey(pointerID)) {
+                //get the new coordinates for the pointer
+                float newX = event.getX(pointerIndex);
+                float newY = event.getY(pointerIndex);
+
+                // get the path and previous point of this pointer
+                Path path = pathMap.get(pointerID);
+                Point point = previousPointMap.get(pointerID);
+
+                // calculate how far the touch moved from last update
+                float deltaX = Math.abs(newX - point.x);
+                float deltaY = Math.abs(newY - point.y);
+
+                // if the distance is significant enough to matter
+                if (deltaX >= TOUCH_TOLERANCE || deltaY >= TOUCH_TOLERANCE) {
+                    // move the path to new location
+                    path.quadTo(point.x, point.y, (newX + point.x) / 2, (newY + point.y) / 2);
+
+                    // store the new coordinates
+                    point.x = (int) newX;
+                    point.y = (int) newY;
+                }
+            }
+        }
+    }
+
 
 
 }
