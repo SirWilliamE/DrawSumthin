@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.provider.MediaStore;
+import android.support.v4.print.PrintHelper;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -210,5 +211,24 @@ public class DoodleView extends View {
     }
 
 
+    // prints the current image
+    public void printImage() {
+        if (PrintHelper.systemSupportsPrint()) {
+            // use Android Support Library's PrintHelper to print image
+            PrintHelper printHelper = new PrintHelper(getContext());
+
+            // fit image in page bounds and print the image
+            printHelper.setScaleMode(PrintHelper.SCALE_MODE_FIT);
+            printHelper.printBitmap("DrawSumthin Image", bitmap);
+        }
+        else {
+            // display message indicating the system does not allow printing
+            Toast message = Toast.makeText(getContext(),
+                    R.string.message_error_printing, Toast.LENGTH_LONG);
+            message.setGravity(Gravity.CENTER, message.getXOffset() / 2,
+                    message.getYOffset() / 2);
+            message.show();
+        }
+    }
 
 }
