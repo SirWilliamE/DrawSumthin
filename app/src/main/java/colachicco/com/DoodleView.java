@@ -7,9 +7,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.provider.MediaStore;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -177,6 +180,34 @@ public class DoodleView extends View {
         path.reset(); // reset the path
     }
 
+
+    // saves the current image
+    public void saveImage() {
+        // use "DrawSumthin" and current time as image name
+        final String name = "DrawSumthin" + System.currentTimeMillis() + ".jpg";
+
+        // save image to the device
+        String location = MediaStore.Images.Media.insertImage(
+                getContext().getContentResolver(), bitmap, name, "DrawSumthin Drawing");
+
+        if (location != null) {
+            // display message confirming message was saved
+            Toast message = Toast.makeText(getContext(),
+                    R.string.message_saved,
+                    Toast.LENGTH_LONG);
+            message.setGravity(Gravity.CENTER, message.getXOffset() / 2,
+                    message.getYOffset() / 2);
+            message.show();
+        }
+        else {
+            // display message indicating there was an error saving
+            Toast message = Toast.makeText(getContext(),
+                    R.string.message_error_saving, Toast.LENGTH_LONG);
+            message.setGravity(Gravity.CENTER, message.getXOffset() / 2,
+                    message.getYOffset() / 2);
+            message.show();
+        }
+    }
 
 
 
