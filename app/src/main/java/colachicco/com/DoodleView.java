@@ -170,5 +170,14 @@ public class DoodleView extends View {
     }
 
 
+    // called when user finishes a touch
+    private void touchEnded(int lineID) {
+        Path path = pathMap.get(lineID); // get the Path
+        bitmapCanvas.drawPath(path, paintLine); // draw to bitmapCanvas
+        path.reset(); // reset the path
+    }
+
+
+
 
 }
