@@ -1,5 +1,6 @@
 package colachicco.com;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -69,6 +70,29 @@ public class ColorDialogFragment extends DialogFragment {
     private MainActivityFragment getDoodleFragment() {
         return (MainActivityFragment) getFragmentManager().findFragmentById(R.id.doodleFragment);
     }
+
+
+    // tell MainActivityFragment that dialog is being displayed
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        MainActivityFragment fragment = getDoodleFragment();
+
+        if (fragment != null)
+            fragment.setDialogOnScreen(true);
+    }
+
+
+    // tell MainActivityFragment that dialog is no longer displayed
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        MainActivityFragment fragment = getDoodleFragment();
+
+        if (fragment != null)
+            fragment.setDialogOnScreen(false);
+    }
+
 
 
 
