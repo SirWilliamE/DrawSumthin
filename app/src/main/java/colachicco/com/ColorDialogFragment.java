@@ -65,6 +65,11 @@ public class ColorDialogFragment extends DialogFragment {
     }
 
 
+    // get a reference to the MainActivityFragment
+    private MainActivityFragment getDoodleFragment() {
+        return (MainActivityFragment) getFragmentManager().findFragmentById(R.id.doodleFragment);
+    }
+
 
 
 
