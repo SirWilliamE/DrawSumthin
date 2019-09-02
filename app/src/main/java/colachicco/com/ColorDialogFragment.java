@@ -94,7 +94,29 @@ public class ColorDialogFragment extends DialogFragment {
     }
 
 
+    // Bar change listener for SeekBars in the color dialog
+    private final SeekBar.OnSeekBarChangeListener colorChangedListener =
+            new SeekBar.OnSeekBarChangeListener() {
+                // display the updated color
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    if (fromUser) // the user changed the SeekBar progress
+                        color = Color.argb(alphaSeekBar.getProgress(),
+                                redSeekBar.getProgress(), greenSeekBar.getProgress(),
+                                blueSeekBar.getProgress());
+                    colorView.setBackgroundColor(color);
+                }
 
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            };
 
 
 }
