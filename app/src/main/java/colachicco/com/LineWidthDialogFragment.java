@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
@@ -71,9 +74,33 @@ public class LineWidthDialogFragment extends DialogFragment {
             fragment.setDialogOnScreen(false);
     }
 
+    // OnSeekBarChangeListener for the SeekBar in the width dialog
+    private final SeekBar.OnSeekBarChangeListener lineWidthChanged = new SeekBar.OnSeekBarChangeListener() {
+        final Bitmap bitmap = Bitmap.createBitmap(400, 100, Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(bitmap); // draws onto the bitmap
 
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            // configure a Paint object for the current SeekBar value
+            Paint p = new Paint();
+            p.setColor(getDoodleFragment().getDoodleView().getDrawingColor());
+            p.setStrokeCap(Paint.Cap.ROUND);
+            p.setStrokeWidth(progress);
 
+            // erase the bitmap and redraw the line
+            bitmap.eraseColor(
+                    getResources().getColor(android.R.color.transparent,
+                            getContext().getTheme()));
+            canvas.drawLine(30, 50, 370, 50, p);
+            widthImageView.setImageBitmap(bitmap);
+        }
 
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {}
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {}
+    };
 
 
 }
