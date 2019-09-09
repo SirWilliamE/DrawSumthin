@@ -30,4 +30,10 @@ public class EraseImageDialogFragment extends DialogFragment {
         return builder.create(); // return dialog
     }
 
+    // gets a reference to the MainActivityFragment
+    private MainActivityFragment getDoodleFragment() {
+        return (MainActivityFragment) getFragmentManager().findFragmentById(R.id.doodleFragment);
+    }
+
+
 }
