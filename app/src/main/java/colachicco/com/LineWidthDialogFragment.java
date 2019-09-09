@@ -61,6 +61,18 @@ public class LineWidthDialogFragment extends DialogFragment {
             fragment.setDialogOnScreen(true);
     }
 
+    // tell MainActivityFragment that dialog is no longer displayed
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        MainActivityFragment fragment = getDoodleFragment();
+
+        if (fragment != null)
+            fragment.setDialogOnScreen(false);
+    }
+
+
+
 
 
 
