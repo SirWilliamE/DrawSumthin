@@ -1,5 +1,6 @@
 package colachicco.com;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -49,6 +50,17 @@ public class LineWidthDialogFragment extends DialogFragment {
     private MainActivityFragment getDoodleFragment() {
         return (MainActivityFragment) getFragmentManager().findFragmentById(R.id.doodleFragment);
     }
+
+    // tell MainActivityFragment that dialog is now displayed
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        MainActivityFragment fragment = getDoodleFragment();
+
+        if (fragment != null)
+            fragment.setDialogOnScreen(true);
+    }
+
 
 
 
